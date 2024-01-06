@@ -1,3 +1,5 @@
+#include "astvisitor.h"
+#include "booleanliteral.h"
 #include "xmlnodeiterator.h"
 
 #include <ANTLRInputStream.h>
@@ -65,7 +67,7 @@ void testXml(){
 }
 
 void testAstParser(){
-    std::string expr = "$$a := 3 * 4";
+    std::string expr = "$$a := 2+5";
 
     ANTLRInputStream input(expr);
     ExprEngineLexer lexer(&input);
@@ -73,6 +75,11 @@ void testAstParser(){
     ExprEngineParser parser(&tokens);
     tree::ParseTree *tree = parser.assignRule();
     qDebug() <<"" << tree->toStringTree().c_str();
+
+    AstVisitor astVisitor;
+    antlrcpp::Any exprTree = astVisitor.visit(tree);
+    AssignExpr* assignExpr = exprTree.as<AssignExpr*>();
+    qDebug() <<"" << assignExpr->evaluate().as<long>()<<"  ";
 }
 
 
@@ -89,6 +96,14 @@ int main(int argc, char *argv[])
             break;
         }
     }
+
+    BooleanLiteral booleanLiteral = BooleanLiteral(true);
+    NumericLiteral num = NumericLiteral(100);
+    antlrcpp::Any ret = num.evaluate();
+    if(ret.is<long>()){
+        qDebug() <<"islong:"<< ret.as<long>()<<"";
+    }
+    qDebug() <<"BooleanLiteral"<<booleanLiteral.evaluate().as<bool>() <<"  ";
 
     testAstParser();
 
