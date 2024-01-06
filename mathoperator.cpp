@@ -16,7 +16,7 @@ QList<ExprNode*> MathOperator::children(){
     return QList<ExprNode*>();
 }
 antlrcpp::Any MathOperator::evaluate(){
-    this->evaluate(QMap<QString, antlrcpp::Any>());
+    return this->evaluate(QMap<QString, antlrcpp::Any>());
 }
 antlrcpp::Any MathOperator::evaluate(QMap<QString, antlrcpp::Any> paramMap){
     return antlrcpp::Any(this->op);
