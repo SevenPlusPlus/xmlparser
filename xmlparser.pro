@@ -58,10 +58,8 @@ DISTFILES += \
     antlr4/ExprEngineLexer.interp \
     antlr4/ExprEngineLexer.tokens
 
-macx: LIBS += -L$$PWD/../../../../usr/local/lib/ -lantlr4-runtime.4.7.2
-
-INCLUDEPATH += $$PWD/../../../../usr/local/include/antlr4-runtime
-DEPENDPATH += $$PWD/../../../../usr/local/include/antlr4-runtime
+INCLUDEPATH += $$PWD/lib/antlr4-cpp-runtime-4.7.2-source/runtime/src
+LIBS += -L$$PWD/lib/antlr4-cpp-runtime-4.7.2-source/dist -lantlr4-runtime
 
 
 #macx: LIBS += -L$$PWD/../antlr4-cpp-runtime-macos/lib/ -lantlr4-runtime
