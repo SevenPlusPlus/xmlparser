@@ -2,13 +2,13 @@
 
 #include <QMap>
 
-AddExpr::AddExpr(ExprNode* left, ExprNode* right) {
+AddExpr::AddExpr(std::shared_ptr<ExprNode> left, std::shared_ptr<ExprNode> right) {
     this->left = left;
     this->right = right;
 }
 
-QList<ExprNode*> AddExpr::children(){
-    QList<ExprNode*> children = QList<ExprNode*>();
+QList<std::shared_ptr<ExprNode>> AddExpr::children(){
+    QList<std::shared_ptr<ExprNode>> children = QList<std::shared_ptr<ExprNode>>();
     children.append(left);
     children.append(right);
     return children;

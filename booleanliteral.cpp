@@ -7,8 +7,8 @@ BooleanLiteral::BooleanLiteral(bool val){
 }
 
 
-QList<ExprNode*> BooleanLiteral::children(){
-    return QList<ExprNode*>();
+QList<std::shared_ptr<ExprNode>> BooleanLiteral::children(){
+    return QList<std::shared_ptr<ExprNode>>();
 }
 
 antlrcpp::Any BooleanLiteral::evaluate(){

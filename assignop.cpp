@@ -6,8 +6,8 @@ AssignOp::AssignOp() {
     this->op = ":=";
 }
 
-QList<ExprNode*> AssignOp::children(){
-    return QList<ExprNode*>();
+QList<std::shared_ptr<ExprNode>> AssignOp::children(){
+    return QList<std::shared_ptr<ExprNode>>();
 }
 antlrcpp::Any AssignOp::evaluate(){
     return this->evaluate(QMap<QString, antlrcpp::Any>());

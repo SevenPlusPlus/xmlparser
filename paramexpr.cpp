@@ -6,8 +6,8 @@ ParamExpr::ParamExpr(std::string nm) {
     this->name = nm;
 }
 
-QList<ExprNode*> ParamExpr::children(){
-    return QList<ExprNode*>();
+QList<std::shared_ptr<ExprNode>> ParamExpr::children(){
+    return QList<std::shared_ptr<ExprNode>>();
 }
 
 antlrcpp::Any ParamExpr::evaluate(){

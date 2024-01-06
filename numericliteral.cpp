@@ -6,8 +6,8 @@ NumericLiteral::NumericLiteral(long value){
     this->val = value;
 }
 
-QList<ExprNode*> NumericLiteral::children(){
-    return QList<ExprNode*>();
+QList<std::shared_ptr<ExprNode>> NumericLiteral::children(){
+    return QList<std::shared_ptr<ExprNode>>();
 }
 
 antlrcpp::Any NumericLiteral::evaluate(){

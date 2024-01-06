@@ -10,7 +10,7 @@ class ExprNode{
 public:
     virtual ~ExprNode() = default;
 
-    virtual QList<ExprNode*> children() = 0;
+    virtual QList<std::shared_ptr<ExprNode>> children() = 0;
 
     virtual antlrcpp::Any evaluate() = 0;
 

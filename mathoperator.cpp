@@ -12,8 +12,8 @@ MathOperator::MathOperator(std::string op) {
     this->op = op;
 }
 
-QList<ExprNode*> MathOperator::children(){
-    return QList<ExprNode*>();
+QList<std::shared_ptr<ExprNode>> MathOperator::children(){
+    return QList<std::shared_ptr<ExprNode>>();
 }
 antlrcpp::Any MathOperator::evaluate(){
     this->evaluate(QMap<QString, antlrcpp::Any>());

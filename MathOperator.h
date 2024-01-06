@@ -25,7 +25,7 @@ public:
         return this->op;
     }
 
-    QList<ExprNode*> children();
+    QList<std::shared_ptr<ExprNode>> children();
     antlrcpp::Any evaluate();
     antlrcpp::Any evaluate(QMap<QString, antlrcpp::Any> paramMap);
 };

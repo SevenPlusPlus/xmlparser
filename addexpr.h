@@ -8,22 +8,14 @@ class AddExpr: public ExprNode
 {
 
 private:
-    ExprNode* left;
-    ExprNode* right;
+    std::shared_ptr<ExprNode> left;
+    std::shared_ptr<ExprNode> right;
 public:
-    AddExpr(ExprNode* left, ExprNode* right);
+    AddExpr(std::shared_ptr<ExprNode> left, std::shared_ptr<ExprNode> right);
     ~AddExpr(){
-        if(left != nullptr){
-            delete left;
-            left = nullptr;
-        }
-        if(right != nullptr){
-            delete right;
-            right = nullptr;
-        }
     }
 
-    QList<ExprNode*> children();
+    QList<std::shared_ptr<ExprNode>> children();
     antlrcpp::Any evaluate();
     antlrcpp::Any evaluate(QMap<QString, antlrcpp::Any> paramMap);
 };

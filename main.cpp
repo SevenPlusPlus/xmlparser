@@ -11,6 +11,9 @@
 #include <antlr4/ExprEngineLexer.h>
 #include <antlr4/ExprEngineParser.h>
 
+#include <__memory/shared_ptr.h>
+#include <__memory/shared_ptr.h>
+
 
 using namespace antlr4;
 
@@ -78,7 +81,7 @@ void testAstParser(){
 
     AstVisitor astVisitor;
     antlrcpp::Any exprTree = astVisitor.visit(tree);
-    AssignExpr* assignExpr = exprTree.as<AssignExpr*>();
+    std::shared_ptr<ExprNode> assignExpr = exprTree.as<std::shared_ptr<ExprNode>>();
     qDebug() <<"" << assignExpr->evaluate().as<long>()<<"  ";
 }
 
@@ -97,7 +100,13 @@ int main(int argc, char *argv[])
         }
     }
 
+    std::shared_ptr<ExprNode> ptr(new BooleanLiteral(true));
+    antlrcpp::Any anyobj = antlrcpp::Any(ptr);
+    std::shared_ptr<ExprNode> sptr = anyobj.as<std::shared_ptr<ExprNode>>();
+    qDebug()<<"ok"<<sptr.get()->evaluate().as<bool>();
+
     BooleanLiteral booleanLiteral = BooleanLiteral(true);
+
     NumericLiteral num = NumericLiteral(100);
     antlrcpp::Any ret = num.evaluate();
     if(ret.is<long>()){

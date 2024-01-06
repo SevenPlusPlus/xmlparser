@@ -6,8 +6,8 @@ StringLiteral::StringLiteral(std::string value) {
     this->val = value;
 }
 
-QList<ExprNode*> StringLiteral::children(){
-    return QList<ExprNode*>();
+QList<std::shared_ptr<ExprNode>> StringLiteral::children(){
+    return QList<std::shared_ptr<ExprNode>>();
 }
 
 antlrcpp::Any StringLiteral::evaluate(){

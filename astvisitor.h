@@ -25,40 +25,38 @@ public:
     antlrcpp::Any visitBooleanLiteral(ExprEngineParser::BooleanLiteralContext *ctx) override {
         bool val = false;
         std::istringstream(ctx->getText()) >> std::boolalpha >> val;
-        BooleanLiteral *booleanLiteral = new BooleanLiteral(val);
-        return antlrcpp::Any(booleanLiteral);
+        ExprNode *booleanLiteral = new BooleanLiteral(val);
+        return antlrcpp::Any(std::shared_ptr<ExprNode>(booleanLiteral));
     }
 
     antlrcpp::Any visitStringLiteral(ExprEngineParser::StringLiteralContext *context) override{
         std::string val = context->getText();
-        StringLiteral *stringliteral = new StringLiteral(val);
-        return antlrcpp::Any(stringliteral);
+        ExprNode *stringliteral = new StringLiteral(val);
+        return antlrcpp::Any(std::shared_ptr<ExprNode>(stringliteral));
     }
 
     antlrcpp::Any visitDecimalLiteral(ExprEngineParser::DecimalLiteralContext *context) override{
         std::string val = context->getText();
         long lval = std::stol(val);
-        return antlrcpp::Any(new NumericLiteral(lval));
+        return antlrcpp::Any(std::shared_ptr<ExprNode>(new NumericLiteral(lval)));
     }
 
     antlrcpp::Any visitParam(ExprEngineParser::ParamContext *context) override{
-        StringLiteral* paramIdentify = visit(context->paramIdentifier()).as<StringLiteral*>();
+        std::shared_ptr<ExprNode> paramIdentify = visit(context->paramIdentifier()).as<std::shared_ptr<ExprNode>>();
         std::string paramName = paramIdentify->evaluate().as<std::string>();
-        delete paramIdentify;
-        return antlrcpp::Any(new ParamExpr(paramName));
+        return antlrcpp::Any(std::shared_ptr<ExprNode>(new ParamExpr(paramName)));
     }
 
     antlrcpp::Any visitParamIdentifier(ExprEngineParser::ParamIdentifierContext *context) override{
-        return antlrcpp::Any(new StringLiteral(context->getText()));
+        return antlrcpp::Any(std::shared_ptr<ExprNode>(new StringLiteral(context->getText())));
     }
 
     antlrcpp::Any visitAssignExpression(ExprEngineParser::AssignExpressionContext *context) override{
-        ParamExpr* param =  visit(context->left).as<ParamExpr*>();
-        AssignOp* assignOp = visit(context->assignOperator()).as<AssignOp*>();
-        delete assignOp;
-        AddExpr* expr = visit(context->right).as<AddExpr*>();
+        std::shared_ptr<ExprNode> param =  visit(context->left).as<std::shared_ptr<ExprNode>>();
+
+        std::shared_ptr<ExprNode> expr = visit(context->right).as<std::shared_ptr<ExprNode>>();
         AssignExpr *assignExpr = new AssignExpr(param, expr);
-        return antlrcpp::Any(assignExpr);
+        return antlrcpp::Any(std::shared_ptr<ExprNode>(assignExpr));
     }
 
     antlrcpp::Any visitExpression(ExprEngineParser::ExpressionContext *context) override{
@@ -84,15 +82,14 @@ public:
 
 
     antlrcpp::Any visitMathPMExprAtom(ExprEngineParser::MathPMExprAtomContext *context) override{
-        antlrcpp::Any leftNode = visit(context->left);
-        NumericLiteral *left = leftNode.as<NumericLiteral*>();
-        NumericLiteral *right = (NumericLiteral *)visit(context->right);
-        MathOperator *op = (MathOperator *)visit(context->mathPmOperator());
-        std::string mathop = op->getOp();
-        delete op;
+        std::shared_ptr<ExprNode> left = visit(context->left).as<std::shared_ptr<ExprNode>>();
+        std::shared_ptr<ExprNode> right = visit(context->right).as<std::shared_ptr<ExprNode>>();
+        std::shared_ptr<ExprNode> op = visit(context->mathPmOperator()).as<std::shared_ptr<ExprNode>>();
+        std::shared_ptr<MathOperator> mathOper = std::dynamic_pointer_cast<MathOperator>(op);
+        std::string mathop = mathOper->getOp();
         if(mathop == MathOperator::PLUS_OP){
             AddExpr *add = new AddExpr(left, right);
-            return antlrcpp::Any(add);
+            return antlrcpp::Any(std::shared_ptr<ExprNode>(add));
         }
         return nullptr;
     }
@@ -100,8 +97,8 @@ public:
 
     antlrcpp::Any visitAssignOperator(ExprEngineParser::AssignOperatorContext *context) override{
         std::string val = context->getText();
-        AssignOp *assignOp = new AssignOp();
-        return antlrcpp::Any(assignOp);
+        ExprNode *assignOp = new AssignOp();
+        return antlrcpp::Any(std::shared_ptr<ExprNode>(assignOp));
     }
 
 
@@ -113,15 +110,15 @@ public:
         } else if(context->booleanLiteral() != nullptr){
             return visit(context->booleanLiteral());
         } else if(context->IDENTIFIER() != nullptr){
-            return antlrcpp::Any(new StringLiteral(context->IDENTIFIER()->getText()));
+            return antlrcpp::Any(std::shared_ptr<ExprNode>(new StringLiteral(context->IDENTIFIER()->getText())));
         }
         return nullptr;
     }
 
 
     antlrcpp::Any visitMathPmOperator(ExprEngineParser::MathPmOperatorContext *context) override{
-        MathOperator *mathop = new MathOperator(context->getText());
-        return antlrcpp::Any(mathop);
+        ExprNode *mathop = new MathOperator(context->getText());
+        return antlrcpp::Any(std::shared_ptr<ExprNode>(mathop));
     }
 
 };
