@@ -7,6 +7,7 @@ CONFIG += c++17 cmdline no_keywords
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        abstractexpr.cpp \
         addexpr.cpp \
         antlr4/ExprEngineBaseVisitor.cpp \
         antlr4/ExprEngineLexer.cpp \
@@ -36,6 +37,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     ExprNode.h \
+    abstractexpr.h \
     addexpr.h \
     antlr4/ExprEngineBaseVisitor.h \
     antlr4/ExprEngineLexer.h \

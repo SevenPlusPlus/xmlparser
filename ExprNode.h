@@ -16,6 +16,8 @@ public:
 
     virtual antlrcpp::Any evaluate(QMap<QString, antlrcpp::Any> paramMap) = 0;
 
+    virtual std::string outputCode() = 0;
+
 };
 
 #endif // EXPRNODE_H

@@ -1,12 +1,13 @@
 #ifndef MATHOPERATOR_H
 #define MATHOPERATOR_H
 
+#include <AbstractExpr.h>
 #include <ExprNode.h>
 #include <string>
 
 
 
-class MathOperator: public ExprNode
+class MathOperator: public AbstractExpr
 {
 private:
     std::string op;

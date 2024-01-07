@@ -1,10 +1,11 @@
 #ifndef BOOLEANLITERAL_H
 #define BOOLEANLITERAL_H
 
+#include <AbstractExpr.h>
 #include <ExprNode.h>
 
 
-class BooleanLiteral: public ExprNode
+class BooleanLiteral: public AbstractExpr
 {
 private:
     bool value;
@@ -17,6 +18,15 @@ public:
     antlrcpp::Any evaluate();
     antlrcpp::Any evaluate(QMap<QString, antlrcpp::Any> paramMap);
     BooleanLiteral(bool val);
+
+    std::string outputCode(){
+        if(value){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
     ~BooleanLiteral(){
 
     };

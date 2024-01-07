@@ -1,10 +1,11 @@
 #ifndef ASSIGNEXPR_H
 #define ASSIGNEXPR_H
 
+#include <AbstractExpr.h>
 #include <ExprNode.h>
 
 
-class AssignExpr: public ExprNode
+class AssignExpr: public AbstractExpr
 {
 private:
     std::shared_ptr<ExprNode> target;
@@ -17,6 +18,10 @@ public:
     QList<std::shared_ptr<ExprNode>> children();
     antlrcpp::Any evaluate();
     antlrcpp::Any evaluate(QMap<QString, antlrcpp::Any> paramMap);
+
+    std::string outputCode(){
+        return target->outputCode() + " = " + right->outputCode();
+    }
 };
 
 #endif // ASSIGNEXPR_H

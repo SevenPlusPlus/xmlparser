@@ -82,7 +82,9 @@ void testAstParser(){
     AstVisitor astVisitor;
     antlrcpp::Any exprTree = astVisitor.visit(tree);
     std::shared_ptr<ExprNode> assignExpr = exprTree.as<std::shared_ptr<ExprNode>>();
-    qDebug() <<"" << assignExpr->evaluate().as<long>()<<"  ";
+    qDebug() <<"result:" << assignExpr->evaluate().as<long>()<<"\n";
+    std::string code = assignExpr->outputCode();
+    qDebug() <<"code:" << QString::fromStdString(code) << "\n";
 }
 
 

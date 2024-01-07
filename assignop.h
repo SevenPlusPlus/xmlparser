@@ -1,11 +1,13 @@
 #ifndef ASSIGNOP_H
 #define ASSIGNOP_H
 
+#include "AbstractExpr.h"
+
 #include <ExprNode.h>
 #include <string>
 
 
-class AssignOp: public ExprNode
+class AssignOp: public AbstractExpr
 {
 private:
     std::string op;

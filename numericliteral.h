@@ -3,8 +3,10 @@
 
 #include "ExprNode.h"
 
+#include <AbstractExpr.h>
 
-class NumericLiteral: public ExprNode
+
+class NumericLiteral: public AbstractExpr
 {
 private:
     long val;
@@ -17,6 +19,9 @@ public:
     QList<std::shared_ptr<ExprNode>> children();
     antlrcpp::Any evaluate();
     antlrcpp::Any evaluate(QMap<QString, antlrcpp::Any> paramMap);
+    std::string outputCode(){
+        return std::to_string(val);
+    }
 };
 
 #endif // NUMERICLITERAL_H
