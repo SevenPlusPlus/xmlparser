@@ -70,7 +70,7 @@ void testXml(){
 }
 
 void testAstParser(){
-    std::string expr = "$$a := 2+5";
+    std::string expr = "$$a := $$b+5";
 
     ANTLRInputStream input(expr);
     ExprEngineLexer lexer(&input);
@@ -82,7 +82,12 @@ void testAstParser(){
     AstVisitor astVisitor;
     antlrcpp::Any exprTree = astVisitor.visit(tree);
     std::shared_ptr<ExprNode> assignExpr = exprTree.as<std::shared_ptr<ExprNode>>();
-    qDebug() <<"result:" << assignExpr->evaluate().as<long>()<<"\n";
+
+    QMap<QString, antlrcpp::Any> paramMap = QMap<QString, antlrcpp::Any>();
+    paramMap.insert(QString::fromStdString("b"), antlrcpp::Any(10L));
+
+    qDebug() <<"result:" << assignExpr->evaluate(paramMap).as<long>()<<"\n";
+
     std::string code = assignExpr->outputCode();
     qDebug() <<"code:" << QString::fromStdString(code) << "\n";
 }
