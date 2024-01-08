@@ -20,8 +20,9 @@ public:
     antlrcpp::Any evaluate();
     antlrcpp::Any evaluate(QMap<QString, antlrcpp::Any> paramMap);
 
-    std::string outputCode(){
-        return left->outputCode() + " + " + right->outputCode();
+    std::string outputCode(CodeGenerateContext& context){
+        context.addImport("import <string>;");
+        return left->outputCode(context) + " + " + right->outputCode(context);
     }
 };
 

@@ -19,7 +19,7 @@ public:
     antlrcpp::Any evaluate(QMap<QString, antlrcpp::Any> paramMap);
     BooleanLiteral(bool val);
 
-    std::string outputCode(){
+    std::string outputCode(CodeGenerateContext& context){
         if(value){
             return "true";
         } else {

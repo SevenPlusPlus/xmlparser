@@ -19,8 +19,8 @@ public:
     antlrcpp::Any evaluate();
     antlrcpp::Any evaluate(QMap<QString, antlrcpp::Any> paramMap);
 
-    std::string outputCode(){
-        return target->outputCode() + " = " + right->outputCode();
+    std::string outputCode(CodeGenerateContext& context){
+        return target->outputCode(context) + " = " + right->outputCode(context);
     }
 };
 

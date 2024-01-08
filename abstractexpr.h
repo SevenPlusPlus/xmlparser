@@ -14,7 +14,7 @@ public:
         return QList<std::shared_ptr<ExprNode>>();
     }
 
-    std::string outputCode(){
+    std::string outputCode(CodeGenerateContext& context){
         return "";
     }
 };

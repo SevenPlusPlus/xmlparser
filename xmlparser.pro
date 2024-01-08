@@ -17,6 +17,7 @@ SOURCES += \
         assignop.cpp \
         astvisitor.cpp \
         booleanliteral.cpp \
+        codegeneratecontext.cpp \
         main.cpp \
         mathoperator.cpp \
         numericliteral.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
     assignop.h \
     astvisitor.h \
     booleanliteral.h \
+    codegeneratecontext.h \
     mathoperator.h \
     numericliteral.h \
     paramexpr.h \

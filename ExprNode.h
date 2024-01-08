@@ -2,6 +2,7 @@
 #define EXPRNODE_H
 
 #include "antlr4-runtime.h"
+#include "codegeneratecontext.h"
 #include <QList>
 
 
@@ -16,7 +17,7 @@ public:
 
     virtual antlrcpp::Any evaluate(QMap<QString, antlrcpp::Any> paramMap) = 0;
 
-    virtual std::string outputCode() = 0;
+    virtual std::string outputCode(CodeGenerateContext& context) = 0;
 
 };
 

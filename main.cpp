@@ -90,8 +90,20 @@ void testAstParser(){
 
     qDebug() <<"evaluate result:" << assignExpr->evaluate(paramMap).as<long>()<<"\n";
 
-    std::string code = assignExpr->outputCode();
+    CodeGenerateContext *context = new CodeGenerateContext();
+    std::string code = assignExpr->outputCode(*context);
     qDebug() <<"code:" << QString::fromStdString(code) << "\n";
+
+    if(!context->getImports().empty()){
+        QList<std::string> imports = context->getImports();
+        QList<std::string>::const_iterator it = imports.constBegin();
+        while (it != imports.constEnd()) {
+            // 访问元素的值
+            qDebug() << QString::fromStdString(*it);
+            ++it;
+        }
+    }
+    delete context;
 }
 
 

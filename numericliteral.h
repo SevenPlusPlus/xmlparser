@@ -19,7 +19,7 @@ public:
     QList<std::shared_ptr<ExprNode>> children();
     antlrcpp::Any evaluate();
     antlrcpp::Any evaluate(QMap<QString, antlrcpp::Any> paramMap);
-    std::string outputCode(){
+    std::string outputCode(CodeGenerateContext& context){
         return std::to_string(val);
     }
 };
