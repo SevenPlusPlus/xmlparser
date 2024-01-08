@@ -71,13 +71,15 @@ void testXml(){
 
 void testAstParser(){
     std::string expr = "$$a := $$b+5";
+    qDebug() <<"expr rule:" << QString::fromStdString(expr)<<"\n";
 
     ANTLRInputStream input(expr);
     ExprEngineLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     ExprEngineParser parser(&tokens);
     tree::ParseTree *tree = parser.assignRule();
-    qDebug() <<"" << tree->toStringTree().c_str();
+
+    qDebug() <<"Ast expression tree:" << tree->toStringTree().c_str() <<"\n";
 
     AstVisitor astVisitor;
     antlrcpp::Any exprTree = astVisitor.visit(tree);
@@ -86,7 +88,7 @@ void testAstParser(){
     QMap<QString, antlrcpp::Any> paramMap = QMap<QString, antlrcpp::Any>();
     paramMap.insert(QString::fromStdString("b"), antlrcpp::Any(10L));
 
-    qDebug() <<"result:" << assignExpr->evaluate(paramMap).as<long>()<<"\n";
+    qDebug() <<"evaluate result:" << assignExpr->evaluate(paramMap).as<long>()<<"\n";
 
     std::string code = assignExpr->outputCode();
     qDebug() <<"code:" << QString::fromStdString(code) << "\n";
@@ -107,19 +109,19 @@ int main(int argc, char *argv[])
         }
     }
 
-    std::shared_ptr<ExprNode> ptr(new BooleanLiteral(true));
-    antlrcpp::Any anyobj = antlrcpp::Any(ptr);
-    std::shared_ptr<ExprNode> sptr = anyobj.as<std::shared_ptr<ExprNode>>();
-    qDebug()<<"ok"<<sptr.get()->evaluate().as<bool>();
+    // std::shared_ptr<ExprNode> ptr(new BooleanLiteral(true));
+    // antlrcpp::Any anyobj = antlrcpp::Any(ptr);
+    // std::shared_ptr<ExprNode> sptr = anyobj.as<std::shared_ptr<ExprNode>>();
+    // qDebug()<<"ok"<<sptr.get()->evaluate().as<bool>();
 
-    BooleanLiteral booleanLiteral = BooleanLiteral(true);
+    // BooleanLiteral booleanLiteral = BooleanLiteral(true);
 
-    NumericLiteral num = NumericLiteral(100);
-    antlrcpp::Any ret = num.evaluate();
-    if(ret.is<long>()){
-        qDebug() <<"islong:"<< ret.as<long>()<<"";
-    }
-    qDebug() <<"BooleanLiteral"<<booleanLiteral.evaluate().as<bool>() <<"  ";
+    // NumericLiteral num = NumericLiteral(100);
+    // antlrcpp::Any ret = num.evaluate();
+    // if(ret.is<long>()){
+    //     qDebug() <<"islong:"<< ret.as<long>()<<"";
+    // }
+    // qDebug() <<"BooleanLiteral"<<booleanLiteral.evaluate().as<bool>() <<"  ";
 
     testAstParser();
 
